@@ -7,11 +7,11 @@
                 </div>
                 <div class="card-content">
                     <div class="card-title"><%= current_user.name %></div>
-                    <p>이메일 : <%= current_user.email %></p>
-                    <p>올린 글 개수 : <%= @posts_count %></p>
+                    <p>e-mail : <%= current_user.email %></p>
+                    <p>Total Posts : <%= @posts_count %></p>
 
                     <%= link_to new_post_path do %>
-                        <button class="btn">글 쓰기</button>
+                        <button class="btn">New Post</button>
                     <% end %>
                 </div>
             </div>
@@ -22,12 +22,16 @@
                     <div class="card-content">
                         <span class="card-title"><%= post.user.name %></span>
                         <span><%= post.created_at %></span>
-                        <p><%= post.content %></p>
+                        <p class="pre-line"><%= post.content %></p>
                     </div>
 
                     <div class="card-action">
-                        <a href="#">좋아요</a>
-                        <a href="#">댓글 달기</a>
+                        <a href="#">LIKE IT!</a>
+                        <% if current_user.id == post.user_id %>
+                          <%= link_to 'Delete', post_url(post), method: "Delete", class: "right"  %>
+                          <%= link_to 'Modify', edit_post_url(post), class: "right" %>
+                        <% end %>
+                        <a href="#">Comment</a>
                     </div>
                 </div>
             <% end %>
