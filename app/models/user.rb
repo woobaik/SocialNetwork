@@ -8,4 +8,9 @@ class User < ApplicationRecord
   has_many :likes
   has_many :liked_posts, through: :likes, source: :post
 
+  def is_like?(post)
+    Like.find_by(user_id: self.id, post_id: post.id).present?
+
+  end
+
 end
