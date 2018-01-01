@@ -16,6 +16,27 @@
           <%= link_to 'Delete', post_url(post), method: "Delete", class: "right"  %>
           <%= link_to 'Modify', edit_post_url(post), class: "right" %>
         <% end %>
-        <a href="#">Comment</a>
+        <%= form_tag post_comments_url(post) do %>
+          <div class="input-field">
+            <%= text_area_tag :content, nil, class: 'materialize-textarea', placeholder: "Leave your comment", required: true %>
+          </div>
+          <div class="input-field">
+            <%= button_tag "COMMENT", class: "btn" %>
+          </div>
+          <% end %>
+          <% if post.comments.present? %>
+        <ul class="collection">
+        <% post.comments.each do |comment| %>
+          <li class="collection-item">
+            <span class="title"><%= comment.user.name %></span>
+            <span class="right"><%= comment.created_at %></span>
+            <p class="pre-line"><%= comment.content %></p>
+            <% if comment.user.id == current_user.id %>
+              <div><%= link_to "Delete", post_comment_path(post, comment), method: "delete" %></div>
+            <% end %>
+          </li>
+        <% end %>
+        </ul>
+      <% end %>
     </div>
 </div>
